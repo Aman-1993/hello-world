@@ -33,7 +33,7 @@ pipeline {
     }
     post {
         success {
-                echo 'SUCCUSS!!!'
+                echo 'SUCCESS!!!'
         }
         failure {
                 echo 'FAILED!!!'
