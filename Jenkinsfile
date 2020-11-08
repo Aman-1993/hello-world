@@ -17,12 +17,14 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
+                sh 'mvn compile'
             }
         }
         stage('Test') {
             when {
                 expression {
                     params.executeTests
+                    sh 'mvn test'
                 }
             }
             steps {
@@ -32,6 +34,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
+                sh 'mvn deploy'
             }
         }
     }
