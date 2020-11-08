@@ -31,10 +31,13 @@ pipeline {
                 sh 'mvn test'
             }
         }
+
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-                sh 'mvn deploy'
+                sh 'ssh dockeradmin@172.31.35.144 "rm -rf /home/dockeradmin/*"'
+                sh 'scp -r /var/lib/jenkins/workspace/temp-pipeline_dev/webapp/target/webapp.war /var/lib/jenkins/workspace/temp-pipeline_dev/Dockerfile dockeradmin@172.31.35.144:/home/dockeradmin'
+                sh 'ssh dockeradmin@172.31.35.144 "cd /home/dockeradmin && docker stop hello-world-container && docker rm hello-world-container && docker rmi hello-world-image && docker build -t hello-world-image . && docker run -d --name hello-world-container -p 8080:8080 hello-world-image; "'
             }
         }
     }
