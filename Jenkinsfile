@@ -24,11 +24,11 @@ pipeline {
             when {
                 expression {
                     params.executeTests
-                    sh 'mvn test'
                 }
             }
             steps {
                 echo 'Testing..'
+                sh 'mvn test'
             }
         }
         stage('Deploy') {
